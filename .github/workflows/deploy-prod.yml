@@ -22,18 +22,18 @@ jobs:
           # Example: Increment the version based on conventional commit messages
           current_version=$(cat version.txt)
           echo "$current_version"
-          # commit_messages=$(git log --format=%B ${{ github.event.before }}..HEAD)
+          commit_messages=$(git log --format=%B ${{ github.event.before }}..HEAD)
           
-          # if [[ $commit_messages == *"[break]"* ]]; then
-          #   new_version=$(echo $current_version | awk -F. -v OFS=. '{++$1; $2=0; $3=0; print}')
-          # elif [[ $commit_messages == *"[feat]"* ]]; then
-          #   new_version=$(echo $current_version | awk -F. -v OFS=. '{++$2; $3=0; print}')s
-          # else
-          #   new_version=$(echo $current_version | awk -F. -v OFS=. '{$3+=1; print}')
-          # fi
+          if [[ $commit_messages == *"[break]"* ]]; then
+             new_version=$(echo $current_version | awk -F. -v OFS=. '{++$1; $2=0; $3=0; print}')
+           elif [[ $commit_messages == *"[feat]"* ]]; then
+             new_version=$(echo $current_version | awk -F. -v OFS=. '{++$2; $3=0; print}')
+           else
+             new_version=$(echo $current_version | awk -F. -v OFS=. '{$3+=1; print}')
+           fi
 
-          # echo "New version: $new_version"
-          # echo "::set-output name=VERSION::$new_version"
+           echo "New version: $new_version"
+           echo "::set-output name=VERSION::$new_version"
 
   # tag:
   #   needs: determine-version
