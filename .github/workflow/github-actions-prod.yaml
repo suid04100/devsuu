@@ -1,0 +1,53 @@
+name: Sem Versioning
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  determine-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Determine version
+        id: version
+        run: |
+          # Your versioning logic here
+          # Example: Increment the version based on conventional commit messages
+          current_version=$(cat version.txt)
+          commit_messages=$(git log --format=%B ${{ github.event.before }}..HEAD)
+          
+          if [[ $commit_messages == *"[break]"* ]]; then
+            new_version=$(echo $current_version | awk -F. -v OFS=. '{++$1; $2=0; $3=0; print}')
+          elif [[ $commit_messages == *"[feat]"* ]]; then
+            new_version=$(echo $current_version | awk -F. -v OFS=. '{++$2; $3=0; print}')
+          elif [[ $commit_messages == *"[bugfix]"* ]]; then
+            new_version=$(echo $current_version | awk -F. -v OFS=. '{++$2; $3=0; print}')
+          else
+            new_version=$(echo $current_version | awk -F. -v OFS=. '{$3+=1; print}')
+          fi
+
+          echo "New version: $new_version"
+          echo "::set-output name=VERSION::$new_version"
+
+  tag:
+    needs: determine-version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+
+      - name: Create and push tag
+        run: |
+          git tag v${{ needs.determine-version.outputs.VERSION }}
+          git push origin v${{ needs.determine-version.outputs.VERSION }}
