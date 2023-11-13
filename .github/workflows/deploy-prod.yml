@@ -24,9 +24,7 @@ jobs:
           if [[ $commit_messages == *"[break]"* ]]; then
             new_version=$(echo $current_version | awk -F. -v OFS=. '{++$1; $2=0; $3=0; print}')
           elif [[ $commit_messages == *"[feat]"* ]]; then
-            new_version=$(echo $current_version | awk -F. -v OFS=. '{++$2; $3=0; print}')
-          elif [[ $commit_messages == *"[bugfix]"* ]]; then
-            new_version=$(echo $current_version | awk -F. -v OFS=. '{++$2; $3=0; print}')
+            new_version=$(echo $current_version | awk -F. -v OFS=. '{++$2; $3=0; print}')s
           else
             new_version=$(echo $current_version | awk -F. -v OFS=. '{$3+=1; print}')
           fi
