@@ -1,2 +1,2 @@
-# Version
+# Semantic Versioning
 0.0.0
