@@ -21,6 +21,7 @@ jobs:
           # Your versioning logic here
           # Example: Increment the version based on conventional commit messages
           current_version=$(cat version.txt)
+          echo "$current_version"
           # commit_messages=$(git log --format=%B ${{ github.event.before }}..HEAD)
           
           # if [[ $commit_messages == *"[break]"* ]]; then
