@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        config: [./config.json]
+        config: [/Users/suraj-capg/testing-git/new/devsuu/config.json]
 
     steps:
       - name: Checkout Repository
