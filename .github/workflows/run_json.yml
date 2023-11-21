@@ -1,3 +1,11 @@
+
+name : sample
+
+on:
+  push:
+    branches:
+      - feature/gitops-integration
+
 jobs:
   read-json:
     runs-on: ubuntu-latest
