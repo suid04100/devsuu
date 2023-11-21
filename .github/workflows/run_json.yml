@@ -4,7 +4,7 @@ name : sample
 on:
   push:
     branches:
-      - feature/gitops-integration
+      - prod
 
 jobs:
   read-json:
