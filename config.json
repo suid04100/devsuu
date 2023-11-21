@@ -1,10 +1,6 @@
 {
-    "include": [
-    {
-        "name": "Mario"
-    },
-    {
-        "name": "Luigi"
-    }
-    ]
+    "version": "1.0",
+    "url": "https://<dev-url>",
+    "errorTopic": "dev_error_topic_name",
+    "targetTopic": "dev_target_topic_name"
 }
