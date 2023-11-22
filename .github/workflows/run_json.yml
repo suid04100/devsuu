@@ -6,12 +6,12 @@ on:
     branches:
       - prod
     paths:
-      - 'reprocessing/dev/**'
-      - 'reprocessing/int/**'
+      - 'reprocessing/dev/**/*'
+      - 'reprocessing/int/**/*'
   pull_request:
      paths:
-      - 'reprocessing/dev/**'
-      - 'reprocessing/int/**'
+      - 'reprocessing/dev/**/*'
+      - 'reprocessing/int/**/*'
 
 jobs:
   check-and-send:
