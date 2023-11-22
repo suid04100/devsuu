@@ -6,7 +6,10 @@ on:
     branches:
       - prod
     paths:
-      - 'reprocessing/*'
+      - 'reprocessing/**'
+  pull_request:
+     paths:
+      - 'reprocessing/**'
 
 jobs:
   check-and-send:
