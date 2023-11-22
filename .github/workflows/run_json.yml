@@ -29,11 +29,12 @@ jobs:
           echo "Parsed JSON: $parsed_json"
           # Parse individual variables
           while IFS= read -r line; do
-          version=$(echo "$line" | jq -r '.version')
-          url=$(echo "$line" | jq -r '.url')
+            version=$(echo "$line" | jq -r '.version')
+            url=$(echo "$line" | jq -r '.url')
 
-          # Set environment variables for each iteration
-          echo "VARIABLE1=${version}" >> $GITHUB_ENV
+            # Set environment variables for each iteration
+            echo "VARIABLE1=${version}" >> $GITHUB_ENV
+          done <<< "$json_content"
 
         env:
           PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
