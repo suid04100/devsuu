@@ -1,60 +1,60 @@
 
-name : sample
+# name : sample
 
-on:
-  push:
-    branches:
-      - prod
-    paths:
-      - 'reprocessing/dev/*.json'
-      - 'reprocessing/int/*.json'
-  pull_request:
-     paths:
-      - 'reprocessing/dev/*.json'
-      - 'reprocessing/int/*.json'
+# on:
+#   push:
+#     branches:
+#       - prod
+#     paths:
+#       - 'reprocessing/dev/*.json'
+#       - 'reprocessing/int/*.json'
+#   pull_request:
+#      paths:
+#       - 'reprocessing/dev/*.json'
+#       - 'reprocessing/int/*.json'
 
-jobs:
-  check-and-send:
-    runs-on: ubuntu-latest
+# jobs:
+#   check-and-send:
+#     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        environment_folder: ["int", "dev"] 
+#     strategy:
+#       matrix:
+#         environment_folder: ["int", "dev"] 
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
 
-      - name: Check for Changes in Folder
-        run: |
-         # Check if the specified file has changes
-        if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- 'reprocessing/${{ matrix.environment_config }}/*.json'; then
-          echo "changed=false" >> $GITHUB_ENV
-        else
-          echo "changed=true" >> $GITHUB_ENV
-        fi
+#       - name: Check for Changes in Folder
+#         run: |
+#          # Check if the specified file has changes
+#         if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- 'reprocessing/${{ matrix.environment_config }}/*.json'; then
+#           echo "changed=false" >> $GITHUB_ENV
+#         else
+#           echo "changed=true" >> $GITHUB_ENV
+#         fi
 
-      - name: Send JSON Files with cURL
-        # if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
-        run: |
-          # Set the API endpoint URL
-          API_URL="https://example.com/api"
-          # Iterate over JSON files in the folder and send them with cURL
-          for json_file in "reprocessing/${{ matrix.environment_folder }}/"*.json; do
-            json_content=$(cat "$json_file")
-            curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
-            echo "JSON from $json_file sent to $API_URL"
-          done          
+#       - name: Send JSON Files with cURL
+#         # if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
+#         run: |
+#           # Set the API endpoint URL
+#           API_URL="https://example.com/api"
+#           # Iterate over JSON files in the folder and send them with cURL
+#           for json_file in "reprocessing/${{ matrix.environment_folder }}/"*.json; do
+#             json_content=$(cat "$json_file")
+#             curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
+#             echo "JSON from $json_file sent to $API_URL"
+#           done
 
-      # - name: Send JSON Files with cURL
-      #   if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
-      #   run: |
-      #     # Set the API endpoint URL
-      #     API_URL="https://example.com/api"
+#       # - name: Send JSON Files with cURL
+#       #   if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
+#       #   run: |
+#       #     # Set the API endpoint URL
+#       #     API_URL="https://example.com/api"
 
-      #     # Iterate over JSON files in the folder and send them with cURL
-      #     for json_file in "reprocessing/${{ matrix.environment_folder }}/"config.json; do
-      #       json_content=$(cat "$json_file")
-      #       curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
-      #       echo "JSON from $json_file sent to $API_URL"
-      #     done
+#       #     # Iterate over JSON files in the folder and send them with cURL
+#       #     for json_file in "reprocessing/${{ matrix.environment_folder }}/"config.json; do
+#       #       json_content=$(cat "$json_file")
+#       #       curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
+#       #       echo "JSON from $json_file sent to $API_URL"
+#       #     done
