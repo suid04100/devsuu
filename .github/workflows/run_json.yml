@@ -32,9 +32,11 @@ jobs:
           if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/${FOLDER}/*"; then
             echo "Folder content for $FOLDER has not changed."
             echo "FOLDER_CHANGED_${FOLDER}=false" >> $GITHUB_ENV
+            echo "$GITHUB_ENV"
           else
             echo "Folder content for $FOLDER has changed."
             echo "FOLDER_CHANGED_${FOLDER}=true" >> $GITHUB_ENV
+            echo "$GITHUB_ENV"
           fi
 
       - name: Send JSON Files with cURL
