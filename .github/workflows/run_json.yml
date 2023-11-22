@@ -9,7 +9,7 @@ on:
       - 'reprocessing/**'  
 
 jobs:
-  check:
+  check-and-send:
     runs-on: ubuntu-latest
 
     strategy:
