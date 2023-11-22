@@ -45,4 +45,4 @@ jobs:
           json_content=$(cat "$json_file")
           curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
           echo "JSON from $json_file sent to $API_URL"
-        done
+          done
