@@ -31,7 +31,7 @@ jobs:
           FOLDER=${{ matrix.environment_folder }}
 
           # Check if the specified folder has changes
-          if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/${FOLDER}/*"; then
+          if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/$FOLDER/"; then
             echo "Folder content for $FOLDER has not changed."
             echo "FOLDER_CHANGED_${FOLDER}=false" >> $GITHUB_ENV
             echo "$GITHUB_ENV"
