@@ -22,26 +22,26 @@ jobs:
 
       - name: Check for Changes in Folder
         run: |
-        # Access the current matrix value (folder name)
-        FOLDER=${{ matrix.environment_folder }}
+          # Access the current matrix value (folder name)
+          FOLDER=${{ matrix.environment_folder }}
 
-        # Check if the specified folder has changes
-        if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/${FOLDER}/"; then
-          echo "Folder content for $FOLDER has not changed."
-          echo "::set-env name=FOLDER_CHANGED_${FOLDER}::false"
-        else
-          echo "Folder content for $FOLDER has changed."
-          echo "::set-env name=FOLDER_CHANGED_${FOLDER}::true"
-        fi
+          # Check if the specified folder has changes
+          if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/${FOLDER}/"; then
+            echo "Folder content for $FOLDER has not changed."
+            echo "::set-env name=FOLDER_CHANGED_${FOLDER}::false"
+          else
+            echo "Folder content for $FOLDER has changed."
+            echo "::set-env name=FOLDER_CHANGED_${FOLDER}::true"
+          fi
 
       - name: Send JSON Files with cURL
         if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
         run: |
-        # Set the API endpoint URL
-        API_URL="https://example.com/api"
+          # Set the API endpoint URL
+          API_URL="https://example.com/api"
 
-        # Iterate over JSON files in the folder and send them with cURL
-        for json_file in "reprocessing/${{ matrix.environment_folder }}/"config.json; do
+          # Iterate over JSON files in the folder and send them with cURL
+          for json_file in "reprocessing/${{ matrix.environment_folder }}/"config.json; do
           json_content=$(cat "$json_file")
           curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
           echo "JSON from $json_file sent to $API_URL"
