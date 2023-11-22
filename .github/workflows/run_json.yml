@@ -6,7 +6,7 @@ on:
     branches:
       - prod
     paths:
-      - 'reprocessing/*'  
+      - 'reprocessing/*'
 
 jobs:
   check-and-send:
