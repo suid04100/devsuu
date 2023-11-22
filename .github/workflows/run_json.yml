@@ -27,8 +27,6 @@ jobs:
         run: |
           parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
           PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
-        # env:
-        #   PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
           echo "Parsed JSON: $parsed_json"
           # Parse individual variables
           while IFS= read -r line; do
@@ -38,3 +36,6 @@ jobs:
             # Set environment variables for each iteration
             echo "VARIABLE1=${version}" >> $GITHUB_ENV
           done <<< "$json_content"
+        # env:
+        #   PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
+
