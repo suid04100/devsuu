@@ -23,7 +23,6 @@ jobs:
 
   # This job calls script CD.yml only when a push to AWS PROD-CLONE is requested.
   call-reprocessing-int:
-    needs: call_reprocessing_int
     if: ${{ inputs.target_environment == 'dev' }}
     uses: .github/workflows/kafka-reprocessing-int.yml
     #secrets:
@@ -33,7 +32,6 @@ jobs:
 
   # This job calls script CD.yml only when a push to AWS PROD-CLONE is requested.
   call-reprocessing-dev:
-    needs: call_reprocessing_dev
     if: ${{ inputs.target_environment == 'dev' }}
     uses: .github/workflows/kafka-reprocessing-dev.yml
     #secrets:
@@ -43,7 +41,6 @@ jobs:
 
   # This job calls script CD.yml only when a push to AWS PROD-CLONE is requested.
   call-reprocessing-prod:
-    needs: call_reprocessing_prod
     if: ${{ inputs.target_environment == 'prod' }}
     uses: .github/workflows/kafka-reprocessing-prod.yml
     #secrets:
