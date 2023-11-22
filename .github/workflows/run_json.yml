@@ -36,8 +36,9 @@ jobs:
             echo "Folder content for $FOLDER has changed."
             echo "FOLDER_CHANGED_${FOLDER}=true" >> $GITHUB_ENV
           fi
+
       - name: Send JSON Files with cURL
-        if: env.FOLDER_CHANGED_${{ matrix.folder }} == 'true'
+        if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
         run: |
           # Set the API endpoint URL
           API_URL="https://example.com/api"
