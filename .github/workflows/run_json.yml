@@ -21,18 +21,22 @@ jobs:
       - name: Read and Parse Multiline JSON
         run: |
           json_content=$(cat ./${{ matrix.environment_config }}/config.json | jq -c -s '.[]')
+          version=$(echo "$json_content" | jq -r '.variable1')
+          url=$(echo "$json_content" | jq -r '.variable1')
+          errorTopic=$(echo "$json_content" | jq -r '.errorTopic')
+          targetTopic=$(echo "$json_content" | jq -r '.targetTopic')
           echo "json-content=${json_content}" >> $GITHUB_ENV
 
-      - name: Use JSON Variables
-        id: parse_json
-        run: |
-          parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
-          echo "Parsed JSON: $parsed_json"
-        env:
-          PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
+          # Set environment variables
+          echo "VERSION=${version}" >> $GITHUB_ENV
+          echo "URL=${url}" >> $GITHUB_ENV
+          echo "ERRORTOPIC=${errorTopic}" >> $GITHUB_ENV
+          echo "TARGETTOPIC=${targetTopic}" >> $GITHUB_ENV
 
-      - name: Extract outputs from meta data JSON
-        id: set_outputs
-        run: |
-          echo -n "version=" >> "$GITHUB_ENV"
-          echo "${{fromJson(steps.read_json.outputs.json_content).version}}" >> "$GITHUB_ENV"
+      # - name: Use JSON Variables
+      #   id: parse_json
+      #   run: |
+      #     parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
+      #     echo "Parsed JSON: $parsed_json"
+      #   env:
+      #     PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
