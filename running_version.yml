@@ -22,6 +22,7 @@
 #         run: |
 #           json_content=$(cat ${{ matrix.config }} | jq -c -s '.[]')
 #           echo "json-content=${json_content}" >> $GITHUB_ENV
+#    json_content=$(cat ./reprocessing_configuration/${{ matrix.environment_config }}/config.json | jq -c -s '.[]')
 
 #       - name: Use JSON Variables
 #         run: |
