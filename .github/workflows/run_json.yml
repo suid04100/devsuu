@@ -25,28 +25,27 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Check for Changes in Folder
-        run: |
-          # Access the current matrix value (folder name)
-          FOLDER=${{ matrix.environment_folder }}
+      # - name: Check for Changes in Folder
+      #   run: |
+      #     # Access the current matrix value (folder name)
+      #     FOLDER=${{ matrix.environment_folder }}
 
-          # Check if the specified folder has changes
-          if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/$FOLDER/"; then
-            echo "Folder content for $FOLDER has not changed."
-            echo "FOLDER_CHANGED_${FOLDER}=false" >> $GITHUB_ENV
-            echo "$GITHUB_ENV"
-          else
-            echo "Folder content for $FOLDER has changed."
-            echo "FOLDER_CHANGED_${FOLDER}=true" >> $GITHUB_ENV
-            echo "$GITHUB_ENV"
-          fi
+      #     # Check if the specified folder has changes
+      #     if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/$FOLDER/"; then
+      #       echo "Folder content for $FOLDER has not changed."
+      #       echo "FOLDER_CHANGED_${FOLDER}=false" >> $GITHUB_ENV
+      #       echo "$GITHUB_ENV"
+      #     else
+      #       echo "Folder content for $FOLDER has changed."
+      #       echo "FOLDER_CHANGED_${FOLDER}=true" >> $GITHUB_ENV
+      #       echo "$GITHUB_ENV"
+      #     fi
 
       - name: Send JSON Files with cURL
-        if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
+        # if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
         run: |
           # Set the API endpoint URL
           API_URL="https://example.com/api"
-
           # Iterate over JSON files in the folder and send them with cURL
           for json_file in "reprocessing/${{ matrix.environment_folder }}/"*.json; do
             json_content=$(cat "$json_file")
