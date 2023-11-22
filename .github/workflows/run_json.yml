@@ -26,11 +26,9 @@ jobs:
       - name: Use JSON Variables
         run: |
           parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
-
-
-        env:
           PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
-        run: |
+        # env:
+        #   PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
           echo "Parsed JSON: $parsed_json"
           # Parse individual variables
           while IFS= read -r line; do
