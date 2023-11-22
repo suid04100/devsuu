@@ -2,14 +2,17 @@ name : Kafka Reprocessing Development
 
 on:
   workflow_call:
-    push:
-      branches:
-        - prod
-      paths:
-        - 'reprocessing/int/*.json'
-      pull_request:
-        paths:
-        - 'reprocessing/int/*.json'
+    secrets:
+      api_Key:
+        required: true
+  push:
+    branches:
+      - prod
+    paths:
+      - 'reprocessing/int/*.json'
+  pull_request:
+     paths:
+      - 'reprocessing/int/*.json'
 
 jobs:
   callingService_int:
