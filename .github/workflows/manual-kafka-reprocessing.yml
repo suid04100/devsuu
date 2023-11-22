@@ -26,8 +26,8 @@ jobs:
     needs: call_reprocessing_int
     if: ${{ inputs.target_environment == 'dev' }}
     uses: ./.github/workflows/kafka-reprocessing-int.yml
-    secrets:
-      api_Key: "${{ secrets.api_Key }}"
+    #secrets:
+      #api_Key: "${{ secrets.api_Key }}"
     with:
       api_url: "https://<int-url>"
 
@@ -36,8 +36,8 @@ jobs:
     needs: call_reprocessing_dev
     if: ${{ inputs.target_environment == 'dev' }}
     uses: ./.github/workflows/kafka-reprocessing-dev.yml
-    secrets:
-      api_Key: "${{ secrets.api_Key }}"
+    #secrets:
+      #api_Key: "${{ secrets.api_Key }}"
     with:
       api_url: "https://<dev-url>3"
 
@@ -46,7 +46,7 @@ jobs:
     needs: call_reprocessing_prod
     if: ${{ inputs.target_environment == 'prod' }}
     uses: ./.github/workflows/kafka-reprocessing-prod.yml
-    secrets:
-      api_Key: "${{ secrets.api_Key }}"
+    #secrets:
+      #api_Key: "${{ secrets.api_Key }}"
     with:
       api_url: "https://<prod-url>"
