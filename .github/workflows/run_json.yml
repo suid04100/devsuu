@@ -23,24 +23,10 @@ jobs:
           json_content=$(cat ${{ matrix.config }} | jq -c -s '.[]')
           echo "json-content=${json_content}" >> $GITHUB_ENV
 
-      # - name: Use JSON Variables
-      #   id: parse_json
-      #   run: |
-      #     parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
-      #     echo "Parsed JSON: $parsed_json"
-      #   env:
-      #     PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
-
-      - name: Split JSON Lines
+      - name: Use JSON Variables
+        id: parse_json
         run: |
-          IFS=$'\n'
-          for line in $(echo "${{ env.json-content }}"); do
-            echo "Processing Line: $line"
-
-            # Use jq to process each line
-            variable1=$(echo "$line" | jq -r '.version')
-            variable2=$(echo "$line" | jq -r '.url')
-
-            echo "VERSION: $variable1"
-            echo "URL: $variable2"
-          done
+          parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
+          echo "Parsed JSON: $parsed_json"
+        env:
+          PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
