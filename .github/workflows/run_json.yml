@@ -20,17 +20,8 @@ jobs:
 
       - name: Read and Parse Multiline JSON
         run: |
-          json_content=$(cat ./${{ matrix.environment_config }}/config.json | jq -c -s '.[]')
-          var1=$(echo "$json_content" | jq -r '.version')
-          var2=$(echo "$json_content" | jq -r '.url')
-          var2=$(echo "$json_content" | jq -r '.errorTopic')
-          var4=$(echo "$json_content" | jq -r '.targetTopic')
-
-          # Set environment variables
-          echo "VERSION=${var1}" >> $GITHUB_ENV
-          echo "URL=${var2}" >> $GITHUB_ENV
-          echo "ERRORTOPIC=${var3}" >> $GITHUB_ENV
-          echo "TARGETTOPIC=${var4}" >> $GITHUB_ENV
+          json_content=$(cat ${{ matrix.config }} | jq -c -s '.[]')
+          echo "json-content=${json_content}" >> $GITHUB_ENV
 
       # - name: Use JSON Variables
       #   id: parse_json
@@ -39,3 +30,17 @@ jobs:
       #     echo "Parsed JSON: $parsed_json"
       #   env:
       #     PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
+
+      - name: Split JSON Lines
+        run: |
+          IFS=$'\n'
+          for line in $(echo "${{ env.json-content }}"); do
+            echo "Processing Line: $line"
+
+            # Use jq to process each line
+            variable1=$(echo "$line" | jq -r '.version')
+            variable2=$(echo "$line" | jq -r '.url')
+
+            echo "VERSION: $variable1"
+            echo "URL: $variable2"
+          done
