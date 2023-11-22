@@ -28,8 +28,8 @@ jobs:
     uses: .github/workflows/kafka-reprocessing-int.yml
     #secrets:
       #api_Key: "${{ secrets.api_Key }}"
-    with:
-      api_url: "https://<int-url>"
+    #with:
+      #api_url: "https://<int-url>"
 
   # This job calls script CD.yml only when a push to AWS PROD-CLONE is requested.
   call-reprocessing-dev:
@@ -38,8 +38,8 @@ jobs:
     uses: .github/workflows/kafka-reprocessing-dev.yml
     #secrets:
       #api_Key: "${{ secrets.api_Key }}"
-    with:
-      api_url: "https://<dev-url>3"
+    #with:
+      #api_url: "https://<dev-url>3"
 
   # This job calls script CD.yml only when a push to AWS PROD-CLONE is requested.
   call-reprocessing-prod:
@@ -48,5 +48,5 @@ jobs:
     uses: .github/workflows/kafka-reprocessing-prod.yml
     #secrets:
       #api_Key: "${{ secrets.api_Key }}"
-    with:
-      api_url: "https://<prod-url>"
+    #with:
+      #api_url: "https://<prod-url>"
