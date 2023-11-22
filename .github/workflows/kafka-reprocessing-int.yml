@@ -7,12 +7,7 @@ on:
     paths:
       - 'reprocessing/dev/**'
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
 jobs:
-
   calling-service:
     runs-on: ubuntu-latest
 
