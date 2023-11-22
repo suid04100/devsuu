@@ -7,7 +7,7 @@ name: Manual_launch_kafka_reprocessing
 on:
 
   # This script must be executed manually in Github Actions.
-  workflow_dispatch:
+  workflow_call:
     inputs:
       target_environment:
         required: true
