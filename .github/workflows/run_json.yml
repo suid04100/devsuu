@@ -17,9 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        environment_folder: ["int", "dev"]
-      matrix:
-        environment_file: ["config.json"]   
+        environment_folder: ["int", "dev"] 
 
     steps:
       - name: Checkout Repository
@@ -28,10 +26,10 @@ jobs:
       - name: Check for Changes in Folder
         run: |
           # Access the current matrix value (folder name)
-          FOLDER={{ matrix.environment_folder }}/{ matrix.environment_file }}
+          FOLDER={{ matrix.environment_folder }}
 
           # Check if the specified folder has changes
-          if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/${FOLDER}/"; then
+          if git diff --quiet --exit-code ${{ github.sha }}..HEAD -- "reprocessing/${FOLDER}/*"; then
             echo "Folder content for $FOLDER has not changed."
             echo "FOLDER_CHANGED_${FOLDER}=false" >> $GITHUB_ENV
           else
