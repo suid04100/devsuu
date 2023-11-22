@@ -41,7 +41,7 @@ jobs:
         API_URL="https://example.com/api"
 
         # Iterate over JSON files in the folder and send them with cURL
-        for json_file in "path/to/${{ matrix.environment_folder }}/"config.json; do
+        for json_file in "reprocessing/${{ matrix.environment_folder }}/"config.json; do
           json_content=$(cat "$json_file")
           curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
           echo "JSON from $json_file sent to $API_URL"
