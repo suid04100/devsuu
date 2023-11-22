@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        config: [./config.json]  
+        environment_config: ["int", "dev"]  
 
     steps:
       - name: Checkout Repository
@@ -20,7 +20,7 @@ jobs:
 
       - name: Read and Parse Multiline JSON
         run: |
-          json_content=$(cat ${{ matrix.config }} | jq -c -s '.[]')
+          json_content=$(cat ./${{ matrix.environment_config }}/config.json | jq -c -s '.[]')
           echo "json-content=${json_content}" >> $GITHUB_ENV
 
       - name: Use JSON Variables
@@ -30,3 +30,4 @@ jobs:
 
         env:
           PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
+       

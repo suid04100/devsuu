@@ -1,0 +1,41 @@
+
+# name : sample
+
+# on:
+#   push:
+#     branches:
+#       - prod
+
+# jobs:
+#   read-json:
+#     runs-on: ubuntu-latest
+
+#     strategy:
+#       matrix:
+#         config: [./config.json]  
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
+
+#       - name: Read and Parse Multiline JSON
+#         run: |
+#           json_content=$(cat ${{ matrix.config }} | jq -c -s '.[]')
+#           echo "json-content=${json_content}" >> $GITHUB_ENV
+
+#       - name: Use JSON Variables
+#         run: |
+#           parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
+#           echo "Parsed JSON: $parsed_json"
+
+#         env:
+#           PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
+
+#       - name: Extract outputs from meta data JSON
+#         id: set_outputs
+#         run: |
+#           # see https://docs.github.com/en/actions/learn-github-actions/expressions#fromjson
+#           echo -n "registry=" >> "$GITHUB_OUTPUT"
+#           echo "${{fromJson(steps.build_and_push_container_image.outputs.container_image_meta_data).image}}" >> "$GITHUB_OUTPUT"
+#           echo -n "digest=" >> "$GITHUB_OUTPUT"
+#           echo "${{fromJson(steps.build_and_push_container_image.outputs.container_image_meta_data).imageDigest}}" >> "$GITHUB_OUTPUT"          

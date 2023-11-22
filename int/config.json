@@ -1,0 +1,6 @@
+{
+    "version": "1.0",
+    "url": "https://<int-url>",
+    "errorTopic": "int_error_topic_name",
+    "targetTopic": "int_target_topic_name"
+}
