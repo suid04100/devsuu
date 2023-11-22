@@ -11,7 +11,7 @@ on:
       - 'reprocessing/dev/*.json'
 
 jobs:
-  check-and-send:
+  callingService_dev:
     runs-on: ubuntu-latest
 
     steps:

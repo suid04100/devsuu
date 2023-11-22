@@ -5,12 +5,16 @@ on:
     branches:
       - prod
     paths:
-      - 'reprocessing/dev/**'
+      - 'reprocessing/int/*.json'
+  pull_request:
+     paths:
+      - 'reprocessing/int/*.json'
 
 jobs:
-  calling-service:
+  callingService_int:
     runs-on: ubuntu-latest
 
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
@@ -19,8 +23,8 @@ jobs:
           # Set the API endpoint URL
           API_URL="https://example.com/api"
           # Iterate over JSON files in the folder and send them with cURL
-          for json_file in "reprocessing/dev/"*.json; do
+          for json_file in "reprocessing/int/"*.json; do
             json_content=$(cat "$json_file")
             curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
             echo "JSON from $json_file sent to $API_URL"
-          done
+          done   
