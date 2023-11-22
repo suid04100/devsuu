@@ -6,7 +6,7 @@ on:
     branches:
       - prod
     paths:
-      - 'reprocessing/**'  
+      - 'reprocessing/*'  
 
 jobs:
   check-and-send:
@@ -20,8 +20,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-    - name: Check for Changes in Folder
-      run: |
+      - name: Check for Changes in Folder
+        run: |
         # Access the current matrix value (folder name)
         FOLDER=${{ matrix.environment_folder }}
 
@@ -34,9 +34,9 @@ jobs:
           echo "::set-env name=FOLDER_CHANGED_${FOLDER}::true"
         fi
 
-    - name: Send JSON Files with cURL
-      if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
-      run: |
+      - name: Send JSON Files with cURL
+        if: env.FOLDER_CHANGED_${{ matrix.environment_folder }} == 'true'
+        run: |
         # Set the API endpoint URL
         API_URL="https://example.com/api"
 
