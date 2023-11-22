@@ -21,11 +21,10 @@ jobs:
       - name: Read and Parse Multiline JSON
         run: |
           json_content=$(cat ./${{ matrix.environment_config }}/config.json | jq -c -s '.[]')
-          version=$(echo "$json_content" | jq -r '.variable1')
-          url=$(echo "$json_content" | jq -r '.variable1')
+          version=$(echo "$json_content" | jq -r '.version')
+          url=$(echo "$json_content" | jq -r '.url')
           errorTopic=$(echo "$json_content" | jq -r '.errorTopic')
           targetTopic=$(echo "$json_content" | jq -r '.targetTopic')
-          echo "json-content=${json_content}" >> $GITHUB_ENV
 
           # Set environment variables
           echo "VERSION=${version}" >> $GITHUB_ENV
