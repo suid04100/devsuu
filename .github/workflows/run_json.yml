@@ -24,10 +24,17 @@ jobs:
           echo "json-content=${json_content}" >> $GITHUB_ENV
 
       - name: Use JSON Variables
+        id: parse_json
         run: |
           parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
           echo "Parsed JSON: $parsed_json"
 
         env:
           PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
-       
+
+      - name: Extract outputs from meta data JSON
+        id: set_outputs
+        run: |
+          # see https://docs.github.com/en/actions/learn-github-actions/expressions#fromjson
+          echo -n "version=" >> "$GITHUB_OUTPUT"
+          echo "${{fromJson(parse_json.outputs.$parsed_json).version}}" >> "$GITHUB_OUTPUT"  
