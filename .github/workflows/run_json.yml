@@ -12,11 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        config: [./config.json]
-
-    outputs:
-      id: read-multiline-json
-      outputs: [json-content]    
+        config: [./config.json]  
 
     steps:
       - name: Checkout Repository
