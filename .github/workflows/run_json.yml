@@ -36,5 +36,5 @@ jobs:
         id: set_outputs
         run: |
           # see https://docs.github.com/en/actions/learn-github-actions/expressions#fromjson
-          echo -n "version=" >> "$GITHUB_OUTPUT"
-          echo "${{fromJson(steps.parse_json.outputs.parsed_json).version}}" >> "$GITHUB_OUTPUT"  
+          echo -n "version=" >> "$$GITHUB_ENV"
+          echo "${{fromJson(steps.parse_json.outputs.parsed_json).version}}" >> "$$GITHUB_ENV"  
