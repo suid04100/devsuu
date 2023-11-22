@@ -35,6 +35,5 @@ jobs:
       - name: Extract outputs from meta data JSON
         id: set_outputs
         run: |
-          # see https://docs.github.com/en/actions/learn-github-actions/expressions#fromjson
-          echo -n "version=" >> "$$GITHUB_ENV"
+          echo -n "version=" >> "$GITHUB_ENV"
           echo "${{fromJson(steps.read_json.outputs.parsed_json).version}}" >> "$$GITHUB_ENV"  
