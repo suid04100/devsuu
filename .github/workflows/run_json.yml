@@ -14,23 +14,23 @@ jobs:
       matrix:
         config: [./config.json]
 
+    outputs:
+      id: read-multiline-json
+      outputs: [json-content]    
+
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Read and Parse JSON
-        id: read-json
+      - name: Read and Parse Multiline JSON
         run: |
-          json_content=$(cat ${{ matrix.config }})
-          echo "::set-output name=json-content::${json_content}"
+          json_content=$(cat ${{ matrix.config }} | jq -c -s '.[]')
+          echo "json-content=${json_content}" >> $GITHUB_ENV
 
       - name: Use JSON Variables
         run: |
           parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
           echo "Parsed JSON: $parsed_json"
-
-          # Use the parsed variables in your workflow
-          # ...
 
         env:
           PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
