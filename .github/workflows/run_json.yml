@@ -28,12 +28,11 @@ jobs:
         run: |
           parsed_json=$(echo "${{ steps.read-json.outputs.json-content }}" | jq -r .)
           echo "Parsed JSON: $parsed_json"
-          echo "${{fromJson(steps.read_json.outputs.json_content).version}}" >> "$$GITHUB_ENV"  
         env:
           PARSED_JSON: ${{ steps.read-json.outputs.json-content }}
 
-      # - name: Extract outputs from meta data JSON
-      #   id: set_outputs
-      #   run: |
-      #     echo -n "version=" >> "$GITHUB_ENV"
-      #     echo "${{fromJson(steps.read_json.outputs.json_content).version}}" >> "$$GITHUB_ENV"  
+      - name: Extract outputs from meta data JSON
+        id: set_outputs
+        run: |
+          echo -n "version=" >> "$GITHUB_ENV"
+          echo "${{fromJson(steps.read_json.outputs.json_content).version}}" >> "$GITHUB_ENV"
