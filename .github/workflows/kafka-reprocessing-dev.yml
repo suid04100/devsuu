@@ -21,10 +21,16 @@ jobs:
       - name: Send JSON Files with cURL
         run: |
           # Set the API endpoint URL
-          API_URL="https://example.com/api"
+          API_URL="https://example.org"
           # Iterate over JSON files in the folder and send them with cURL
           for json_file in "reprocessing/dev/"*.json; do
             json_content=$(cat "$json_file")
-            curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
-            echo "JSON from $json_file sent to $API_URL"
-          done   
+            RESPONSE=$(curl -X -LI POST -H "Content-Type: application/json" -d "$json_content" "$API_URL" --o /dev/null -w '%{http_code}\n' -s)
+            echo "CURL_RESPONSE=${RESPONSE}" >> $GITHUB_ENV
+          done
+
+      - name: cURL request
+        run: |
+          # Set the API endpoint URL
+          RESPONSE=$(curl -X GET https://google.com)
+        
