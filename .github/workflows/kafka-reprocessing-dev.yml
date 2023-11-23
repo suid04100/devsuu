@@ -25,7 +25,7 @@ jobs:
           # Iterate over JSON files in the folder and send them with cURL
           for json_file in "reprocessing/dev/"*.json; do
             json_content=$(cat "$json_file")
-            RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d '{"name": "hellothere"}' "$API_URL")
+            RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d ""$json_content"" "$API_URL")
             echo "JSON from $RESPONSE"
           done
 
