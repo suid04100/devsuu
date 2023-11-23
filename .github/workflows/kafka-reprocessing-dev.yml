@@ -21,11 +21,11 @@ jobs:
       - name: Send JSON Files with cURL
         run: |
           # Set the API endpoint URL
-          API_URL="http://localhost:3000"
+          API_URL="https://0a48-2a02-908-13b9-38e0-4aa-a0ab-64cc-55ae.ngrok-free.app"
           # Iterate over JSON files in the folder and send them with cURL
           for json_file in "reprocessing/dev/"*.json; do
             json_content=$(cat "$json_file")
-            RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d '{"name": "suma"}' "$API_URL")
+            RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d '{"name": "hellothere"}' "$API_URL")
             echo "JSON from $RESPONSE"
           done
 
