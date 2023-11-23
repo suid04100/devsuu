@@ -26,7 +26,7 @@ jobs:
           for json_file in "reprocessing/dev/"*.json; do
             json_content=$(cat "$json_file")
             response_code=$(curl -X POST -H "Content-Type: application/json" -d '{"key": "value"}' -w "%{http_code}" "$API_URL")
-            if [ "$response_code" -eq 200 ]; then
+            if [ -n "$response_code" ] && [ "$response_code" -eq 200 ]; then
                echo "Request was successful."
             else
                echo "Request failed with status code: $response_code"
