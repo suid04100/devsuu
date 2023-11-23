@@ -21,13 +21,12 @@ jobs:
       - name: Send JSON Files with cURL
         run: |
           # Set the API endpoint URL
-          API_URL="https://example.org"
+          API_URL="http://localhost:3000"
           # Iterate over JSON files in the folder and send them with cURL
           for json_file in "reprocessing/dev/"*.json; do
             json_content=$(cat "$json_file")
-            RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL")
-            echo "JSON from $json_file sent to $API_URL"
-            echo "CURL_RESPONSE=${RESPONSE}" >> "$GITHUB_OUTPUT"
+            RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d '{"name": "suma"}' "$API_URL")
+            echo "JSON from $RESPONSE"
           done
 
       # - name: cURL request
