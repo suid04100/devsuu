@@ -21,7 +21,7 @@ jobs:
       - name: Send JSON Files with cURL
         run: |
           # Set the API endpoint URL
-          API_URL="https://0a48-2a02-908-13b9-38e0-4aa-a0ab-64cc-55ae.ngrok-free.app"
+          API_URL="https://cd63-2a02-908-13b9-38e0-4aa-a0ab-64cc-55ae.ngrok-free.app"
           # Iterate over JSON files in the folder and send them with cURL
           for json_file in "reprocessing/dev/"*.json; do
             json_content=$(cat "$json_file")
