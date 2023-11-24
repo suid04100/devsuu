@@ -21,11 +21,11 @@ jobs:
       - name: Send JSON Files with cURL
         run: |
           # Set the API endpoint URL
-          API_URL="https://aa78-176-198-203-166.ngrok-free.app"
+          API_URL="https://aef5-176-198-203-166.ngrok-free.app"
           # Iterate over JSON files in the folder and send them with cURL
-          # for json_file in "reprocessing/dev/"*.json; do
-          # json_content=$(cat "$json_file")
-            response_code=$(curl -X POST -H "Content-Type: application/json" -d '{"key": "value"}' -w "%{http_code}" "$API_URL")
+            for json_file in "reprocessing/dev/"*.json; do
+            json_content=$(cat "$json_file")
+            response_code=$(curl -X POST -H "Content-Type: application/json" -d '$json_content' -w "%{http_code}" "$API_URL")
             if [[ -n "$response_code" && "$response_code" =~ ^[0-9]+$ ]]; then
             if [ "$response_code" -eq 200 ]; then
               echo "Request was successful."
@@ -35,5 +35,5 @@ jobs:
             else
               echo "Invalid or empty response code: $response_code"
             fi
-          #done
+          done
         
