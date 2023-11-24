@@ -1,12 +1,13 @@
 name : Kafka Reprocessing Integration
 
 on:
-  push:
-    branches:
+ workflow_call:
+   push:
+     branches:
       - prod
     paths:
       - 'reprocessing/dev/*.json'
-  pull_request:
+   pull_request:
      paths:
       - 'reprocessing/dev/*.json'
 
@@ -24,8 +25,8 @@ jobs:
       - name: Send JSON Files with cURL
         run: |
           # Set the API endpoint URL
-          # API_URL="https://384e-2a02-908-13b9-38e0-8091-f90b-a163-a12d.ngrok-free.app"
-          # DIRECTORY_PATH="reprocessing/dev/*.json"
+            API_URL="https://384e-2a02-908-13b9-38e0-8091-f90b-a163-a12d.ngrok-free.app"
+            DIRECTORY_PATH="reprocessing/dev/*.json"
           # Send Json Files
             response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH_DEV" "$API_URL_DEV")
             if [[ -n "$response_code" && "$response_code" =~ ^[0-9]+$ ]]; then
