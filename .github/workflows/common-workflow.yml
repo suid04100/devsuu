@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: Set Environment Variables
         run: |
-          echo "source common-env-vars.env" >> $GITHUB_ENV
+          echo "source common-environment-var" >> $GITHUB_ENV
