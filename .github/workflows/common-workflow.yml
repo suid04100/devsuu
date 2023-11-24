@@ -1,0 +1,15 @@
+name: Common Workflow for All Workflows
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  set-env-vars:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Environment Variables
+        run: |
+          echo "source common-env-vars.env" >> $GITHUB_ENV

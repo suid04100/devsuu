@@ -18,15 +18,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Include Common Workflow
+        uses: ./.github/workflows/common-workflow.yml  
+
       - name: Send JSON Files with cURL
         run: |
           # Set the API endpoint URL
-          API_URL="https://0d5e-176-198-203-166.ngrok-free.app"
-          DIRECTORY_PATH="reprocessing/dev/*.json"
-          # Iterate over JSON files in the folder and send them with cURL
-            #for json_file in "reprocessing/dev/"*.json; do
-            #json_content=$(cat "$json_file")
-            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
+          # API_URL="https://384e-2a02-908-13b9-38e0-8091-f90b-a163-a12d.ngrok-free.app"
+          # DIRECTORY_PATH="reprocessing/dev/*.json"
+          # Send Json Files
+            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH_DEV" "$API_URL_DEV")
             if [[ -n "$response_code" && "$response_code" =~ ^[0-9]+$ ]]; then
             if [ "$response_code" -eq 200 ]; then
               echo "Request was successful."
@@ -36,5 +37,4 @@ jobs:
             else
               echo "Invalid or empty response code: $response_code"
             fi
-          #done
         
