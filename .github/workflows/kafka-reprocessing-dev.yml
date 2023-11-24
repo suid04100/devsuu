@@ -1,15 +1,15 @@
 name : Kafka Reprocessing Integration
 
 on:
- workflow_call:
-   push:
-     branches:
-      - prod
+  workflow_call:
+    push:
+      branches:
+       - prod
     paths:
       - 'reprocessing/dev/*.json'
-   pull_request:
-     paths:
-      - 'reprocessing/dev/*.json'
+    pull_request:
+      paths:
+       - 'reprocessing/dev/*.json'
 
 jobs:
   callingService_dev:
