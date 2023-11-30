@@ -19,7 +19,6 @@ jobs:
         directory_path:
           - "reprocessing_configuration/int/*.json"
           - "reprocessing_configuration/dev/*.json"
-          - "reprocessing_configuration/prod/*.json"
 
     steps:
       - name: Checkout Repository
