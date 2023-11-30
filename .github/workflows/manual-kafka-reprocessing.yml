@@ -5,10 +5,10 @@ on:
     branches:
       - prod
     paths:
-      - 'reprocessing_configuration/dev/*.json'
+      - 'reprocessing_configuration/dev/config.json'
   pull_request:
      paths:
-      - 'reprocessing_configuration/dev/*.json'
+      - 'reprocessing_configuration/dev/config.json'
 
 jobs:
   callingService_dev:
@@ -17,8 +17,8 @@ jobs:
     strategy:
       matrix:
         directory_path:
-          - "reprocessing_configuration/int/*.json"
-          - "reprocessing_configuration/dev/*.json"
+          - "reprocessing_configuration/int/config.json"
+          - "reprocessing_configuration/dev/config.json"
 
     steps:
       - name: Checkout Repository
