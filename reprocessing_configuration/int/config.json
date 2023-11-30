@@ -1,6 +1,6 @@
 {
-    "version": "1.2",
-    "url": "https://<int-url>",
+    "version": "1.0",
+    "url": "https://ce76-176-198-203-166.ngrok-free.app",
     "errorTopic": "int_error_topic_name",
     "targetTopic": "int_target_topic_name"
 }
