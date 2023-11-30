@@ -14,12 +14,12 @@ jobs:
     strategy:
       matrix:
         directory_path:
-          - "reprocessing_configuration/dev/*.json"
-          - "reprocessing_configuration/int/*.json"
+          - "reprocessing_configuration/dev/config.json"
+          - "reprocessing_configuration/int/config.json"
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Extract API URL from JSON
         id: extract-api-url
