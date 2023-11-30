@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - prod
-    paths:
-      - 'reprocessing_configuration/dev/config.json'
-      - 'reprocessing_configuration/int/config.json'
-  pull_request:
-     paths:
-      - 'reprocessing_configuration/dev/config.json'
-      - 'reprocessing_configuration/int/config.json'
+  #   paths:
+  #     - 'reprocessing_configuration/dev/config.json'
+  #     - 'reprocessing_configuration/int/config.json'
+  # pull_request:
+  #    paths:
+  #     - 'reprocessing_configuration/dev/config.json'
+  #     - 'reprocessing_configuration/int/config.json'
 
 jobs:
   callingService_dev:
