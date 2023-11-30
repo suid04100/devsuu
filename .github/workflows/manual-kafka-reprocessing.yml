@@ -26,6 +26,3 @@ jobs:
 
       - name: Use Curl POST Template
         uses: ./.github/workflows/action.yml
-        with:
-          matrix:
-            directory_path: ${{ matrix.directory_path }}
