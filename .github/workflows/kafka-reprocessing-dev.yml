@@ -31,7 +31,7 @@ jobs:
           DIRECTORY_PATH="reprocessing/dev/*.json"
 
           # Json file sent as payload
-            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "${{ API_URL }}")
+            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "${API_URL}")
           # HTTP Response code is checked and based on the response team appropriate message is being sent to teams webhook
           # Checks if the variable in non-empty & and contains only digits
             if [[ -n "$response_code" && "$response_code" =~ ^[0-9]+$ ]]; then
