@@ -21,7 +21,7 @@ jobs:
       - name: Extract API Key from JSON
         id: extract-api-key
         run: |
-          DIRECTORY_PATH="reprocessing/int/*.json"
+          DIRECTORY_PATH="reprocessing/dev/*.json"
           API_URL=$(jq -r '.url' $DIRECTORY_PATH)
           echo "API_URL=${API_URL}" >> $GITHUB_ENV  
 
