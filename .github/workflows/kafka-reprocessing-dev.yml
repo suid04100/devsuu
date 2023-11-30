@@ -18,12 +18,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Extract API Key from JSON
-        id: extract-api-key
+      - name: Extract API URL from JSON
+        id: extract-api-url
         run: |
           DIRECTORY_PATH="reprocessing/dev/*.json"
           API_URL=$(jq -r '.url' $DIRECTORY_PATH)
           echo "API_URL=${API_URL}" >> $GITHUB_ENV  
+
+      - name: Debug API URL
+        run: echo "API_URL: $API_URL"    
 
       - name: Send JSON Files with cURL
         run: |
