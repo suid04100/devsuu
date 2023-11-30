@@ -1,49 +1,32 @@
-# ========================================================================
-#  Manually executed Github Actions script to execute the CI-CD pipeline
-#  for running the kafka reprocessing service.
-# ========================================================================
-name: Manual_launch_kafka_reprocessing
+name: Kafka Reprocessing Integration
 
 on:
-
-  # This script must be executed manually in Github Actions.
-  workflow_dispatch:
-    inputs:
-      target_environment:
-        required: true
-        description: 'Which Environment should be the reprocessing run on?'
-        default: ""
-        type: choice
-        options:
-        - dev
-        - int
-        - prod
+  push:
+    branches:
+      - prod
+    paths:
+      - 'reprocessing_configuration/dev/*.json'
+  pull_request:
+     paths:
+      - 'reprocessing_configuration/dev/*.json'
 
 jobs:
+  callingService_dev:
+    runs-on: ubuntu-latest
 
-  # This job calls script CD.yml only when a push to AWS PROD-CLONE is requested.
-  call-reprocessing-int:
-    if: ${{ inputs.target_environment == 'int' }}
-    uses: ./.github/workflows/kafka-reprocessing-int.yml
-    #secrets:
-      #api_Key: "${{ secrets.api_Key }}"
-    #with:
-      #api_url: "https://<int-url>"
+    strategy:
+      matrix:
+        directory_path:
+          - "reprocessing_configuration/int/*.json"
+          - "reprocessing_configuration/dev/*.json"
+          - "reprocessing_configuration/prod/*.json"
 
-  # This job calls script CD.yml only when a push to AWS PROD-CLONE is requested.
-  call-reprocessing-dev:
-    if: ${{ inputs.target_environment == 'dev' }}
-    uses: ./.github/workflows/kafka-reprocessing-dev.yml
-    #secrets:
-      #api_Key: "${{ secrets.api_Key }}"
-    #with:
-      #api_url: "https://<dev-url>3"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-  # This job calls script CD.yml only when a push to AWS PROD-CLONE is requested.
-  call-reprocessing-prod:
-    if: ${{ inputs.target_environment == 'prod' }}
-    uses: ./.github/workflows/kafka-reprocessing-prod.yml
-    #secrets:
-      #api_Key: "${{ secrets.api_Key }}"
-    #with:
-      #api_url: "https://<prod-url>"
+      - name: Use Curl POST Template
+        uses: ./.github/actions/curl-template.yml
+        with:
+          matrix:
+            directory_path: ${{ matrix.directory_path }}

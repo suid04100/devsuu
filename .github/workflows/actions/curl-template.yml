@@ -1,0 +1,35 @@
+# .github/workflows/curl-post-template.yml
+name: Curl POST Template
+
+on:
+  workflow_run:
+    workflows: ["Kafka Reprocessing Integration"]
+    types:
+      - completed
+
+jobs:
+  curl-post:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        directory_path:
+          - "reprocessing_configuration/dev/*.json"
+          - "reprocessing_configuration/int/*.json"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Extract API URL from JSON
+        id: extract-api-url
+        run: |
+          DIRECTORY_PATH="${{ matrix.directory_path }}"
+          API_URL=$(jq -r '.url' $DIRECTORY_PATH)
+          echo "API_URL=${API_URL}" >> $GITHUB_ENV
+
+      - name: Send JSON Files with cURL
+        run: |
+          DIRECTORY_PATH="${{ matrix.directory_path }}"
+          response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
+          echo "$response_code"

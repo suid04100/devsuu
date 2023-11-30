@@ -1,34 +1,34 @@
-name : Kafka Reprocessing Development
+# name : Kafka Reprocessing Development
 
-on:
-  workflow_call:
-    secrets:
-      api_Key:
-        required: true
-  push:
-    branches:
-      - prod
-    paths:
-      - 'reprocessing/int/*.json'
-  pull_request:
-     paths:
-      - 'reprocessing/int/*.json'
+# on:
+#   workflow_call:
+#     secrets:
+#       api_Key:
+#         required: true
+#   push:
+#     branches:
+#       - prod
+#     paths:
+#       - 'reprocessing/int/*.json'
+#   pull_request:
+#      paths:
+#       - 'reprocessing/int/*.json'
 
-jobs:
-  callingService_int:
-    runs-on: ubuntu-latest
+# jobs:
+#   callingService_int:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
 
-      - name: Send JSON Files with cURL
-        run: |
-          # Set the API endpoint URL
-          API_URL="https://example.com/api"
-          # Iterate over JSON files in the folder and send them with cURL
-          for json_file in "reprocessing/int/"*.json; do
-            json_content=$(cat "$json_file")
-            curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
-            echo "JSON from $json_file sent to $API_URL"
-          done   
+#       - name: Send JSON Files with cURL
+#         run: |
+#           # Set the API endpoint URL
+#           API_URL="https://example.com/api"
+#           # Iterate over JSON files in the folder and send them with cURL
+#           for json_file in "reprocessing/int/"*.json; do
+#             json_content=$(cat "$json_file")
+#             curl -X POST -H "Content-Type: application/json" -d "$json_content" "$API_URL"
+#             echo "JSON from $json_file sent to $API_URL"
+#           done   
