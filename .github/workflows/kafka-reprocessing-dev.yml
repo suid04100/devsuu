@@ -1,15 +1,14 @@
 name : Kafka Reprocessing Integration
 
 on:
-  workflow_call:
-    push:
-      branches:
-       - prod
+  push:
+    branches:
+      - prod
     paths:
       - 'reprocessing/dev/*.json'
-    pull_request:
-      paths:
-       - 'reprocessing/dev/*.json'
+  pull_request:
+     paths:
+      - 'reprocessing/dev/*.json'
 
 jobs:
   callingService_dev:
@@ -19,23 +18,35 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Include Common Workflow
-        uses: ./.github/workflows/common-workflow.yml  
+      - name: Extract API Key from JSON
+        id: extract-api-key
+        run: |
+          DIRECTORY_PATH="reprocessing/int/*.json"
+          API_URL=$(jq -r '.url' $DIRECTORY_PATH)
+          echo "API_URL=${API_URL}" >> $GITHUB_ENV  
 
       - name: Send JSON Files with cURL
         run: |
-          # Set the API endpoint URL
-            API_URL="https://384e-2a02-908-13b9-38e0-8091-f90b-a163-a12d.ngrok-free.app"
-            DIRECTORY_PATH="reprocessing/dev/*.json"
-          # Send Json Files
-            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH_DEV" "$API_URL_DEV")
+          # Set the Diretory Path of the config file in Integration
+          DIRECTORY_PATH="reprocessing/dev/*.json"
+
+          # This is a temperory url thats exposed with grok and you need to open the tunnel everytime.
+          # Todo : To be changed to Azure Function URL when the function is deployed.
+          # API_URL="https://ee39-176-198-203-166.ngrok-free.app"
+
+          # Json file sent as payload
+            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
+          # HTTP Response code is checked and based on the response team appropriate message is being sent to teams webhook
+          # Checks if the variable in non-empty & and contains only digits
             if [[ -n "$response_code" && "$response_code" =~ ^[0-9]+$ ]]; then
             if [ "$response_code" -eq 200 ]; then
-              echo "Request was successful."
+              echo "Kafka Request Processing Service was successful for Integration Environment."
+              curl -X POST -H 'Content-Type: application/json' -d '{"text": "Kafka Request Processing Service was successful for Integration Environment"}' "${{ secrets.KAFKA_REPROCESSING_SERVICE_TEAMS_WEBHOOK_URL }}"
             else
-              echo "Request failed with status code: $response_code"
+              echo "Kafka Request Processing Service failed for Integration Environment failed with status code: $response_code"
+              curl -X POST -H 'Content-Type: application/json' -d '{"text": "Kafka Request Processing Service failed for Integration Environment failed"}' "${{ secrets.KAFKA_REPROCESSING_SERVICE_TEAMS_WEBHOOK_URL }}"
             fi
             else
-              echo "Invalid or empty response code: $response_code"
+              echo "Invalid or empty response code for Kafka Request Processing Service in Integration Environment: $response_code"
+              curl -X POST -H 'Content-Type: application/json' -d '{"text": "Invalid or empty response code for Kafka Request Processing Service in Integration Environment"}' "${{ secrets.KAFKA_REPROCESSING_SERVICE_TEAMS_WEBHOOK_URL }}"
             fi
-        
