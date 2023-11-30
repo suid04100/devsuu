@@ -26,7 +26,8 @@ jobs:
           echo "API_URL=${API_URL}" >> $GITHUB_ENV  
 
       - name: Debug API URL
-        run: echo "API_URL: $API_URL"    
+        run: |
+           echo "API_URL: $API_URL"    
 
       - name: Send JSON Files with cURL
         run: |
