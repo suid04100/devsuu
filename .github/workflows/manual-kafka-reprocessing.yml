@@ -16,11 +16,11 @@ jobs:
   callingService_dev:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        directory_path:
-          - "reprocessing_configuration/int/config.json"
-          - "reprocessing_configuration/dev/config.json"
+    # strategy:
+    #   matrix:
+    #     directory_path:
+    #       - "reprocessing_configuration/int/config.json"
+    #       - "reprocessing_configuration/dev/config.json"
 
     steps:
       - name: Checkout Repository
