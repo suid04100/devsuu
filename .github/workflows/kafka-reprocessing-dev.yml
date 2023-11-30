@@ -23,7 +23,7 @@ jobs:
         run: |
           DIRECTORY_PATH="reprocessing/dev/*.json"
           API_URL=$(jq -r '.url' $DIRECTORY_PATH)
-          echo "API_URL=${API_URL}" >> $GITHUB_ENV  
+          echo "${API_URL}" >> $GITHUB_ENV  
 
       - name: Debug API URL
         run: |
