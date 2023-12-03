@@ -1,35 +1,27 @@
-# .github/workflows/curl-post-template.yml
-name: Curl POST Template
+name: 'Post JSON Action'
 
-on:
-  workflow_run:
-    workflows: ["Kafka Reprocessing Integration"]
-    types:
-      - completed
+inputs:
+  json-path:
+    description: 'Path to the JSON file'
+    required: true
+  api-endpoint:
+    description: 'API endpoint for POST request'
+    required: true
 
-jobs:
-  curl-post:
-    runs-on: ubuntu-latest
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-    strategy:
-      matrix:
-        directory_path:
-          - "reprocessing_configuration/dev/config.json"
-          - "reprocessing_configuration/int/config.json"
+    - name: Check for Changes
+      id: changes
+      run: |
+        CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep ${{ inputs.json-path }} || true)
+        echo "Changed files: $CHANGED_FILES"
+        echo "::set-output name=changed_files::${CHANGED_FILES}"
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Extract API URL from JSON
-        id: extract-api-url
-        run: |
-          DIRECTORY_PATH="${{ matrix.directory_path }}"
-          API_URL=$(jq -r '.url' $DIRECTORY_PATH)
-          echo "API_URL=${API_URL}" >> $GITHUB_ENV
-
-      - name: Send JSON Files with cURL
-        run: |
-          DIRECTORY_PATH="${{ matrix.directory_path }}"
-          response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
-          echo "$response_code"
+    - name: Run Curl POST
+      if: steps.changes.outputs.changed_files
+      run: |
+        curl -X POST -H "Content-Type: application/json" -d "@${{ inputs.json-path }}" ${{ inputs.api-endpoint }}

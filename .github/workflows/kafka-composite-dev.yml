@@ -1,0 +1,31 @@
+name: 'Deploy Workflow'
+
+on:
+  push:
+    branches:
+      - feature/prod
+
+jobs:
+  deploy-int:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use Composite Action - Dev
+        uses: your-username/your-action-repo@v1
+        with:
+          json-path: 'reprocessing_configuration/dev/config.json'
+          api-endpoint: 'https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app'
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use Composite Action - Int
+        uses: your-username/your-action-repo@v1
+        with:
+          json-path: 'reprocessing_configuration/int/config.json'
+          api-endpoint: 'https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app'
