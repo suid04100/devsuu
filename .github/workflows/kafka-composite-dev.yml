@@ -17,6 +17,7 @@ jobs:
         with:
           json-path: 'reprocessing_configuration/dev/config.json'
           api-endpoint: 'https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app'
+        shell: bash  
 
   deploy-dev:
     runs-on: ubuntu-latest
@@ -29,3 +30,4 @@ jobs:
         with:
           json-path: 'reprocessing_configuration/int/config.json'
           api-endpoint: 'https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app'
+        shell: bash
