@@ -13,11 +13,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Use Composite Action - Dev
+        shell: bash
         uses: ./.github/actions/setup-composite
         with:
           json-path: 'reprocessing_configuration/dev/config.json'
           api-endpoint: 'https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app'
-        shell: bash  
+          
 
   deploy-dev:
     runs-on: ubuntu-latest
@@ -26,8 +27,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Use Composite Action - Int
+        shell: bash
         uses: ./.github/actions/setup-composite
         with:
           json-path: 'reprocessing_configuration/int/config.json'
           api-endpoint: 'https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app'
-        shell: bash
