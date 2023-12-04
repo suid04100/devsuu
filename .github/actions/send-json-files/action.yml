@@ -47,9 +47,9 @@ runs:
         # response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
         # echo "RESPONSE_CODE=${response_code}" 
 
-        if [ ${{ inputs.environment }} -eq "dev" ];then
+        if [ ${{ inputs.environment }} == "dev" ];then
            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_DEV" -d '"name": "HelloToAzure"' "$API_URL")
-        elif[ ${{ inputs.environment }} -eq "int" ];then
+        elif[ ${{ inputs.environment }} == "int" ];then
            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_INT" -d '"name": "HelloToAzure"' "$API_URL")
         else
            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_PROD" -d '"name": "HelloToAzure"' "$API_URL")
