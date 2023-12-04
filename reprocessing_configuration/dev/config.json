@@ -1,5 +1,5 @@
 {
-    "version": "1.2",
+    "version": "1.0",
     "url": "https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app",
     "errorTopic": "dev_error_topic_name",
     "targetTopic": "dev_target_topic_name"
