@@ -5,6 +5,15 @@ inputs:
   directory-path:
     description: 'Path to the JSON file for extracting API URL'
     required: true
+  environment:
+    description: 'The environment in which reprocessing service is run on'
+    required: true
+  function-key-secret-dev:
+    description: 'The github secret for dev passed as an input'
+    required: true 
+  function-key-secret-int:
+    description: 'The github secret for dev passed as an input'
+    required: true              
 
 runs:
   using: composite
@@ -20,7 +29,12 @@ runs:
       run: |
         DIRECTORY_PATH="${{ inputs.directory-path }}"
         API_URL=$(jq -r '.url' $DIRECTORY_PATH)
-        echo "API_URL=${API_URL}" >> $GITHUB_ENV    
+        echo "API_URL=${API_URL}" >> $GITHUB_ENV
+
+    - name: Use GitHub secrets in composite action
+      run: |
+        echo "FUNCTION_KEY_SECRET_DEV=${{ inputs.function-key-secret-dev }}"
+        echo "FUNCTION_KEY_SECRET_INT=${{ inputs.function-key-secret-int }}"
 
     - name: Send JSON Files with cURL
       shell: bash
@@ -28,6 +42,14 @@ runs:
         # Set the Directory Path of the config file in Integration
         DIRECTORY_PATH="${{ inputs.directory-path }}"
 
-        # Json file sent as payload
-        response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
-        echo "RESPONSE_CODE=${response_code}" 
+        # # Json file sent as payload
+        # response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
+        # echo "RESPONSE_CODE=${response_code}" 
+
+        if [ ${{ inputs.environment }} -eq "dev" ];then
+           response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_DEV" -d '"name": "HelloToAzure"' "$API_URL")
+        elif[ ${{ inputs.environment }} -eq "int" ];then
+           response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_INT" -d '"name": "HelloToAzure"' "$API_URL")
+        else
+           response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_PROD" -d '"name": "HelloToAzure"' "$API_URL")
+        fi
