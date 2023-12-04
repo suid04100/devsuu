@@ -23,4 +23,4 @@ jobs:
         with:
           directory-path: 'reprocessing_configuration/int/*.json'
           environment: 'int'
-          function-key-secret-dev: ${{ secrets.AZURE_FUNCTION_KEY_KAFKA_REPROCESSING_SERVICE_INT }}          
+          function-key-secret-int: ${{ secrets.AZURE_FUNCTION_KEY_KAFKA_REPROCESSING_SERVICE_INT }}          
