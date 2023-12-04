@@ -1,0 +1,15 @@
+name: 'Extract API URL'
+description: 'Extracts API URL from JSON file'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Extract API URL
+      id: extract-api-url
+      run: |
+        DIRECTORY_PATH="reprocessing_configuration/int/*.json"
+        API_URL=$(jq -r '.url' $DIRECTORY_PATH)
+        echo "API_URL=${API_URL}" >> $GITHUB_ENV

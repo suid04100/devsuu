@@ -1,21 +1,28 @@
-name: 'Deploy Workflow'
+name: 'Kafka Reprocessing Integration'
 
 on:
   push:
     branches:
       - feature/prod
+    paths:
+      - 'reprocessing_configuration/dev/*.json'
+  pull_request:
+    paths:
+      - 'reprocessing_configuration/dev/*.json'
 
 jobs:
-  deploy-int:
+  callingServiceComposite_dev:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: '0'
 
-      - name: Use Composite Action - Dev
-        uses: ./jsoners/setup-composite
+      - name: Extract API URL
+        uses: ./.github/actions/extract-api-url
+        id: extract-api-url
+
+      - name: Send JSON Files with cURL
+        uses: ./.github/actions/send-json-files
         with:
-          json-path: 'reprocessing_configuration/dev/config.json'
-          api-endpoint: 'https://ca0b-176-198-203-166.ngrok-free.app'
+          API_URL: ${{ env.API_URL }}
