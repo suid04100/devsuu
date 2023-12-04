@@ -18,14 +18,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Extract API URL
-        uses: ./.github/actions/extract-api-url
-        id: extract-api-url
-        with:
-          directory-path: 'reprocessing_configuration/dev/*.json'
-
+      # - name: Extract API URL
+      #   uses: ./.github/actions/extract-api-url
+      #   id: extract-api-url
+      #   with:
+      #     directory-path: 'reprocessing_configuration/dev/*.json'
 
       - name: Send JSON Files with cURL
         uses: ./.github/actions/send-json-files
         with:
+          directory-path: 'reprocessing_configuration/dev/*.json'
           API_URL: ${{ env.API_URL }}
