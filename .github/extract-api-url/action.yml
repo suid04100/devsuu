@@ -9,6 +9,7 @@ runs:
 
     - name: Extract API URL
       id: extract-api-url
+      shell: bash
       run: |
         DIRECTORY_PATH="reprocessing_configuration/int/*.json"
         API_URL=$(jq -r '.url' $DIRECTORY_PATH)
