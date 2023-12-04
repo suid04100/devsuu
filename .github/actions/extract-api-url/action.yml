@@ -3,6 +3,7 @@ description: 'Extracts API URL from JSON file'
 
 runs:
   using: 'composite'
+  shell: bash
   steps:
     - name: Checkout Repository
       uses: actions/checkout@v3

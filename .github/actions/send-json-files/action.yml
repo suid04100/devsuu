@@ -3,6 +3,7 @@ description: 'Sends JSON files with cURL'
 
 runs:
   using: 'composite'
+  shell: bash
   steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
