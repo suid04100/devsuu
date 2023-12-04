@@ -21,6 +21,8 @@ jobs:
       - name: Extract API URL
         uses: ./.github/actions/extract-api-url
         id: extract-api-url
+        with:
+          directory-path: 'reprocessing_configuration/int/*.json'        
 
       - name: Send JSON Files with cURL
         uses: ./.github/actions/send-json-files

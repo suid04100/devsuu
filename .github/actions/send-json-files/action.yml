@@ -1,6 +1,11 @@
 name: 'Send JSON Files with cURL'
 description: 'Sends JSON files with cURL'
 
+inputs:
+  directory-path:
+    description: 'Path to the JSON file for extracting API URL'
+    required: true
+
 runs:
   using: composite
   steps:
@@ -13,7 +18,7 @@ runs:
       shell: bash
       run: |
         # Set the Directory Path of the config file in Integration
-        DIRECTORY_PATH="reprocessing_configuration/dev/*.json"
+        DIRECTORY_PATH="${{ inputs.directory-path }}"
 
         # Json file sent as payload
         response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
