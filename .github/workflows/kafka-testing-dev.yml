@@ -28,4 +28,4 @@ jobs:
         uses: ./.github/actions/send-json-files
         with:
           directory-path: 'reprocessing_configuration/dev/*.json'
-          API_URL: ${{ env.API_URL }}
+          # API_URL: ${{ env.API_URL }}
