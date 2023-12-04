@@ -11,10 +11,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
 
       - name: Use Composite Action - Dev
         uses: ./jsoners/setup-composite
         with:
-            fetch-depth: '1'
-            json-path: 'reprocessing_configuration/dev/config.json'
-            api-endpoint: 'https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app'
+          json-path: 'reprocessing_configuration/dev/config.json'
+          api-endpoint: 'https://ca0b-176-198-203-166.ngrok-free.app'
