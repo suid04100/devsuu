@@ -32,6 +32,7 @@ runs:
         echo "API_URL=${API_URL}" >> $GITHUB_ENV
 
     - name: Use GitHub secrets in composite action
+      shell: bash
       run: |
         echo "FUNCTION_KEY_SECRET_DEV=${{ inputs.function-key-secret-dev }}"
         echo "FUNCTION_KEY_SECRET_INT=${{ inputs.function-key-secret-int }}"
