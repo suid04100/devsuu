@@ -2,7 +2,7 @@ name: 'Send JSON Files with cURL'
 description: 'Sends JSON files with cURL'
 
 runs:
-  using: 'composite'
+  using: composite
   shell: bash
   steps:
     - name: Checkout Repository
@@ -11,10 +11,11 @@ runs:
         fetch-depth: 0
 
     - name: Send JSON Files with cURL
+      shell: bash
       run: |
         # Set the Directory Path of the config file in Integration
         DIRECTORY_PATH="reprocessing_configuration/dev/*.json"
 
         # Json file sent as payload
         response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d @"$DIRECTORY_PATH" "$API_URL")
-        echo "RESPONSE_CODE=${response_code}"
+        echo "RESPONSE_CODE=${response_code}" 

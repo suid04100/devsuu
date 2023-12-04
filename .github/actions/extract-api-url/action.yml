@@ -2,7 +2,7 @@ name: 'Extract API URL'
 description: 'Extracts API URL from JSON file'
 
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -10,7 +10,6 @@ runs:
         fetch-depth: 0
 
     - name: Extract API URL
-      id: extract-api-url
       shell: bash
       run: |
         DIRECTORY_PATH="reprocessing_configuration/dev/*.json"
