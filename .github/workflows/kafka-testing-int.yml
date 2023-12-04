@@ -11,7 +11,7 @@ on:
       - 'reprocessing_configuration/int/*.json'
 
 jobs:
-  callingServiceComposite_dev:
+  callingServiceComposite_int:
     runs-on: ubuntu-latest
 
     steps:
