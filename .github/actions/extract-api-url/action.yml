@@ -10,6 +10,7 @@ runs:
         fetch-depth: 0
 
     - name: Extract API URL
+      id: extract-api-url
       shell: bash
       run: |
         DIRECTORY_PATH="reprocessing_configuration/dev/*.json"
