@@ -15,5 +15,6 @@ jobs:
       - name: Use Composite Action - Dev
         uses: ./jsoners/setup-composite
         with:
+            fetch-depth: '1'
             json-path: 'reprocessing_configuration/dev/config.json'
             api-endpoint: 'https://d4e4-2a02-908-13b9-38e0-a06e-3da2-3570-fa87.ngrok-free.app'
