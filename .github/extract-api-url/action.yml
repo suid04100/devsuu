@@ -11,6 +11,6 @@ runs:
       id: extract-api-url
       shell: bash
       run: |
-        DIRECTORY_PATH="reprocessing_configuration/int/*.json"
+        DIRECTORY_PATH="reprocessing_configuration/dev/*.json"
         API_URL=$(jq -r '.url' $DIRECTORY_PATH)
         echo "API_URL=${API_URL}" >> $GITHUB_ENV

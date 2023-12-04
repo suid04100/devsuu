@@ -3,7 +3,7 @@ name: 'Kafka Reprocessing Integration'
 on:
   push:
     branches:
-      - feature/prod
+      - feature/testing
     paths:
       - 'reprocessing_configuration/dev/*.json'
   pull_request:
