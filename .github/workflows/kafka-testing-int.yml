@@ -21,4 +21,4 @@ jobs:
       - name: Send JSON Files with cURL
         uses: ./.github/actions/send-json-files
         with:
-          directory-path: 'reprocessing_configuration/dev/*.json'
+          directory-path: 'reprocessing_configuration/int/*.json'
