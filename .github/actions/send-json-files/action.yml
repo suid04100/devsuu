@@ -31,11 +31,11 @@ runs:
         API_URL=$(jq -r '.url' $DIRECTORY_PATH)
         echo "API_URL=${API_URL}" >> $GITHUB_ENV
 
-    - name: Use GitHub secrets in composite action
-      shell: bash
-      run: |
-        echo "FUNCTION_KEY_SECRET_DEV=${{ inputs.function-key-secret-dev }}"
-        echo "FUNCTION_KEY_SECRET_INT=${{ inputs.function-key-secret-int }}"
+    # - name: Use GitHub secrets in composite action
+    #   shell: bash
+    #   run: |
+    #     echo "FUNCTION_KEY_SECRET_DEV=${{ inputs.function-key-secret-dev }}"
+    #     echo "FUNCTION_KEY_SECRET_INT=${{ inputs.function-key-secret-int }}"
 
     - name: Send JSON Files with cURL
       shell: bash
@@ -48,9 +48,9 @@ runs:
         # echo "RESPONSE_CODE=${response_code}" 
 
         if [ ${{ inputs.environment }} == "dev" ];then
-           response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_DEV" -d '"name": "HelloToAzure"' "$API_URL")
+           response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: ${{ inputs.function-key-secret-dev }}" -d '"name": "HelloToAzure"' "$API_URL")
         elif[ ${{ inputs.environment }} == "int" ];then
-           response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_INT" -d '"name": "HelloToAzure"' "$API_URL")
+           response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: ${{ inputs.function-key-secret-int }}" -d '"name": "HelloToAzure"' "$API_URL")
         else
            response_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -H "x-functions-key: $FUNCTION_KEY_SECRET_PROD" -d '"name": "HelloToAzure"' "$API_URL")
         fi
